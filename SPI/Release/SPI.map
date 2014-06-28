@@ -490,7 +490,7 @@ END GROUP
  *(.flashtext .flashtext.*)
                 0x08000260                . = ALIGN (0x4)
 
-.text           0x08000260      0x698
+.text           0x08000260      0x666
                 0x08000260                . = ALIGN (0x4)
  *(.text .text.*)
  .text.GPIO_Init
@@ -537,43 +537,44 @@ END GROUP
                 0x080004bc       0x48 ./src/main.o
                 0x080004bc                sendLInt
  .text.startup.main
-                0x08000504      0x140 ./src/main.o
+                0x08000504      0x110 ./src/main.o
                 0x08000504                main
  .text.spi1_init
-                0x08000644       0xc4 ./src/myGYRO.o
-                0x08000644                spi1_init
+                0x08000614       0xc4 ./src/myGYRO.o
+                0x08000614                spi1_init
  .text.spi1_transfer_byte
-                0x08000708       0x34 ./src/myGYRO.o
-                0x08000708                spi1_transfer_byte
+                0x080006d8       0x34 ./src/myGYRO.o
+                0x080006d8                spi1_transfer_byte
  .text.GYROwrite_byte
-                0x0800073c       0x30 ./src/myGYRO.o
-                0x0800073c                GYROwrite_byte
+                0x0800070c       0x30 ./src/myGYRO.o
+                0x0800070c                GYROwrite_byte
  .text.GYROread_byte
-                0x0800076c       0x34 ./src/myGYRO.o
-                0x0800076c                GYROread_byte
+                0x0800073c       0x34 ./src/myGYRO.o
+                0x0800073c                GYROread_byte
  .text.SPI_I2S_DeInit
-                0x080007a0       0x64 ./src/stm32f30x_spi.o
-                0x080007a0                SPI_I2S_DeInit
+                0x08000770       0x64 ./src/stm32f30x_spi.o
+                0x08000770                SPI_I2S_DeInit
  .text.SPI_Init
-                0x08000804       0x98 ./src/stm32f30x_spi.o
-                0x08000804                SPI_Init
- .text.SPI_Cmd  0x0800089c       0x18 ./src/stm32f30x_spi.o
-                0x0800089c                SPI_Cmd
+                0x080007d4       0x98 ./src/stm32f30x_spi.o
+                0x080007d4                SPI_Init
+ .text.SPI_Cmd  0x0800086c       0x18 ./src/stm32f30x_spi.o
+                0x0800086c                SPI_Cmd
  .text.SPI_RxFIFOThresholdConfig
-                0x080008b4       0x16 ./src/stm32f30x_spi.o
-                0x080008b4                SPI_RxFIFOThresholdConfig
+                0x08000884       0x16 ./src/stm32f30x_spi.o
+                0x08000884                SPI_RxFIFOThresholdConfig
  .text.SPI_SendData8
-                0x080008ca        0x4 ./src/stm32f30x_spi.o
-                0x080008ca                SPI_SendData8
+                0x0800089a        0x4 ./src/stm32f30x_spi.o
+                0x0800089a                SPI_SendData8
  .text.SPI_ReceiveData8
-                0x080008ce        0x4 ./src/stm32f30x_spi.o
-                0x080008ce                SPI_ReceiveData8
+                0x0800089e        0x4 ./src/stm32f30x_spi.o
+                0x0800089e                SPI_ReceiveData8
  .text.SPI_I2S_GetFlagStatus
-                0x080008d2        0xc ./src/stm32f30x_spi.o
-                0x080008d2                SPI_I2S_GetFlagStatus
+                0x080008a2        0xc ./src/stm32f30x_spi.o
+                0x080008a2                SPI_I2S_GetFlagStatus
  *(.rodata .rodata.*)
  .rodata.str1.1
-                0x080008de       0x1a ./src/main.o
+                0x080008ae       0x18 ./src/main.o
+                                 0x1b (size before relaxing)
  *(vtable)
  *(.eh_frame*)
  *(.glue_7)
@@ -581,31 +582,31 @@ END GROUP
  *(.glue_7t)
  .glue_7t       0x00000000        0x0 linker stubs
 
-.vfp11_veneer   0x080008f8        0x0
+.vfp11_veneer   0x080008c8        0x0
  .vfp11_veneer  0x00000000        0x0 linker stubs
 
-.v4_bx          0x080008f8        0x0
+.v4_bx          0x080008c8        0x0
  .v4_bx         0x00000000        0x0 linker stubs
 
-.iplt           0x080008f8        0x0
+.iplt           0x080008c8        0x0
  .iplt          0x00000000        0x0 ./system/src/stm32f3-stdperiph/stm32f30x_gpio.o
 
-.rel.dyn        0x080008f8        0x0
+.rel.dyn        0x080008c8        0x0
  .rel.iplt      0x00000000        0x0 ./system/src/stm32f3-stdperiph/stm32f30x_gpio.o
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
-                0x080008f8                __exidx_start = .
+                0x080008c8                __exidx_start = .
 
 .ARM.exidx
  *(.ARM.exidx* .gnu.linkonce.armexidx.*)
-                0x080008f8                __exidx_end = .
-                0x080008f8                . = ALIGN (0x4)
-                0x080008f8                _etext = .
-                0x080008f8                __etext = .
-                0x080008f8                _sidata = _etext
+                0x080008c8                __exidx_end = .
+                0x080008c8                . = ALIGN (0x4)
+                0x080008c8                _etext = .
+                0x080008c8                __etext = .
+                0x080008c8                _sidata = _etext
 
-.data           0x20000000        0xc load address 0x080008f8
+.data           0x20000000        0xc load address 0x080008c8
                 0x20000000                . = ALIGN (0x4)
                 0x20000000                _sdata = .
                 0x20000000                __data_start__ = .
@@ -621,10 +622,10 @@ END GROUP
                 0x2000000c                _edata = .
                 0x2000000c                __data_end__ = .
 
-.igot.plt       0x2000000c        0x0 load address 0x08000904
+.igot.plt       0x2000000c        0x0 load address 0x080008d4
  .igot.plt      0x00000000        0x0 ./system/src/stm32f3-stdperiph/stm32f30x_gpio.o
 
-.bss            0x2000000c        0x4 load address 0x08000904
+.bss            0x2000000c        0x4 load address 0x080008d4
                 0x2000000c                . = ALIGN (0x4)
                 0x2000000c                __bss_start__ = .
                 0x2000000c                _sbss = .
@@ -650,7 +651,7 @@ END GROUP
                 0x20000010                PROVIDE (__end, _end_noinit)
                 0x20000010                PROVIDE (__end__, _end_noinit)
 
-._check_stack   0x20000010      0x100 load address 0x08000908
+._check_stack   0x20000010      0x100 load address 0x080008d8
                 0x20000010                . = ALIGN (0x4)
                 0x20000110                . = (. + _Minimum_Stack_Size)
  *fill*         0x20000010      0x100 
@@ -792,7 +793,7 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x3c46
+.debug_info     0x00000000     0x3c18
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x6a0 ./system/src/stm32f3-stdperiph/stm32f30x_gpio.o
  .debug_info    0x000006a0      0xac3 ./system/src/stm32f3-stdperiph/stm32f30x_rcc.o
@@ -804,11 +805,11 @@ END GROUP
  .debug_info    0x00001b54       0xd0 ./system/src/cortexm/exception_handlers.o
  .debug_info    0x00001c24      0x490 ./system/src/cmsis/system_stm32f30x.o
  .debug_info    0x000020b4       0x8e ./system/src/cmsis/vectors_stm32f30x.o
- .debug_info    0x00002142      0x72b ./src/main.o
- .debug_info    0x0000286d      0x7c2 ./src/myGYRO.o
- .debug_info    0x0000302f      0xc17 ./src/stm32f30x_spi.o
+ .debug_info    0x00002142      0x6fd ./src/main.o
+ .debug_info    0x0000283f      0x7c2 ./src/myGYRO.o
+ .debug_info    0x00003001      0xc17 ./src/stm32f30x_spi.o
 
-.debug_abbrev   0x00000000     0x1026
+.debug_abbrev   0x00000000     0x1035
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x1e8 ./system/src/stm32f3-stdperiph/stm32f30x_gpio.o
  .debug_abbrev  0x000001e8      0x20b ./system/src/stm32f3-stdperiph/stm32f30x_rcc.o
@@ -820,11 +821,11 @@ END GROUP
  .debug_abbrev  0x000008c1       0x2c ./system/src/cortexm/exception_handlers.o
  .debug_abbrev  0x000008ed      0x145 ./system/src/cmsis/system_stm32f30x.o
  .debug_abbrev  0x00000a32       0x8f ./system/src/cmsis/vectors_stm32f30x.o
- .debug_abbrev  0x00000ac1      0x1ac ./src/main.o
- .debug_abbrev  0x00000c6d      0x1cc ./src/myGYRO.o
- .debug_abbrev  0x00000e39      0x1ed ./src/stm32f30x_spi.o
+ .debug_abbrev  0x00000ac1      0x1bb ./src/main.o
+ .debug_abbrev  0x00000c7c      0x1cc ./src/myGYRO.o
+ .debug_abbrev  0x00000e48      0x1ed ./src/stm32f30x_spi.o
 
-.debug_line     0x00000000     0x16a7
+.debug_line     0x00000000     0x169f
  *(.debug_line)
  .debug_line    0x00000000      0x262 ./system/src/stm32f3-stdperiph/stm32f30x_gpio.o
  .debug_line    0x00000262      0x4a6 ./system/src/stm32f3-stdperiph/stm32f30x_rcc.o
@@ -836,11 +837,11 @@ END GROUP
  .debug_line    0x00000c7d       0x6d ./system/src/cortexm/exception_handlers.o
  .debug_line    0x00000cea      0x147 ./system/src/cmsis/system_stm32f30x.o
  .debug_line    0x00000e31       0x58 ./system/src/cmsis/vectors_stm32f30x.o
- .debug_line    0x00000e89      0x205 ./src/main.o
- .debug_line    0x0000108e      0x1af ./src/myGYRO.o
- .debug_line    0x0000123d      0x46a ./src/stm32f30x_spi.o
+ .debug_line    0x00000e89      0x1fd ./src/main.o
+ .debug_line    0x00001086      0x1af ./src/myGYRO.o
+ .debug_line    0x00001235      0x46a ./src/stm32f30x_spi.o
 
-.debug_frame    0x00000000      0x984
+.debug_frame    0x00000000      0x97c
  *(.debug_frame)
  .debug_frame   0x00000000      0x100 ./system/src/stm32f3-stdperiph/stm32f30x_gpio.o
  .debug_frame   0x00000100      0x29c ./system/src/stm32f3-stdperiph/stm32f30x_rcc.o
@@ -852,11 +853,11 @@ END GROUP
  .debug_frame   0x000004f0       0xb0 ./system/src/cortexm/exception_handlers.o
  .debug_frame   0x000005a0       0x3c ./system/src/cmsis/system_stm32f30x.o
  .debug_frame   0x000005dc       0x20 ./system/src/cmsis/vectors_stm32f30x.o
- .debug_frame   0x000005fc       0xc0 ./src/main.o
- .debug_frame   0x000006bc       0x7c ./src/myGYRO.o
- .debug_frame   0x00000738      0x24c ./src/stm32f30x_spi.o
+ .debug_frame   0x000005fc       0xb8 ./src/main.o
+ .debug_frame   0x000006b4       0x7c ./src/myGYRO.o
+ .debug_frame   0x00000730      0x24c ./src/stm32f30x_spi.o
 
-.debug_str      0x00000000     0x14f9
+.debug_str      0x00000000     0x14ed
  *(.debug_str)
  .debug_str     0x00000000      0x4c1 ./system/src/stm32f3-stdperiph/stm32f30x_gpio.o
                                 0x4fd (size before relaxing)
@@ -878,14 +879,14 @@ END GROUP
                                 0x334 (size before relaxing)
  .debug_str     0x00000ed2       0x57 ./system/src/cmsis/vectors_stm32f30x.o
                                 0x15a (size before relaxing)
- .debug_str     0x00000f29      0x104 ./src/main.o
-                                0x387 (size before relaxing)
- .debug_str     0x0000102d      0x18e ./src/myGYRO.o
+ .debug_str     0x00000f29       0xf8 ./src/main.o
+                                0x37b (size before relaxing)
+ .debug_str     0x00001021      0x18e ./src/myGYRO.o
                                 0x58f (size before relaxing)
- .debug_str     0x000011bb      0x33e ./src/stm32f30x_spi.o
+ .debug_str     0x000011af      0x33e ./src/stm32f30x_spi.o
                                 0x826 (size before relaxing)
 
-.debug_loc      0x00000000     0x1aa0
+.debug_loc      0x00000000     0x1a24
  *(.debug_loc)
  .debug_loc     0x00000000      0x2fa ./system/src/stm32f3-stdperiph/stm32f30x_gpio.o
  .debug_loc     0x000002fa      0x929 ./system/src/stm32f3-stdperiph/stm32f30x_rcc.o
@@ -893,9 +894,9 @@ END GROUP
  .debug_loc     0x00000c44      0x2a4 ./system/src/newlib/_startup.o
  .debug_loc     0x00000ee8       0x63 ./system/src/newlib/_syscalls.o
  .debug_loc     0x00000f4b       0xce ./system/src/cmsis/system_stm32f30x.o
- .debug_loc     0x00001019      0x2fd ./src/main.o
- .debug_loc     0x00001316       0x84 ./src/myGYRO.o
- .debug_loc     0x0000139a      0x706 ./src/stm32f30x_spi.o
+ .debug_loc     0x00001019      0x281 ./src/main.o
+ .debug_loc     0x0000129a       0x84 ./src/myGYRO.o
+ .debug_loc     0x0000131e      0x706 ./src/stm32f30x_spi.o
 
 .debug_macinfo
  *(.debug_macinfo)

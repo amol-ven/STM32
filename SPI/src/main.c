@@ -9,16 +9,8 @@
 #include "stm32f30x_spi.h"
 #include "myGYRO.h"
 
-#define BUFF_SIZE 50
-#define BIAS_CALC_COUNTS 500
-
-//#define BIAS 214
+#define BUFF_SIZE 100
 #define SCALING_FOR_INTEGRATION 1000
-
-//#define DRIFT_CORRECTION__COUNTS  100
-//#define DRIFT_CORRECTION__SHIFT   -1
-
-
 
 
 void sendChar(char c)
@@ -153,16 +145,16 @@ int main()
 
 	//int buffer[BUFF_SIZE];
 	int index;
-	int sum;
+	int i;
+	int sum0=0, avg0;
+	int GYRO_NULL = 213;
 	int count = 0;
-	int BIAS_calc__counts = 1;
-	int BIAS = 214;
-	int BIAS_sum=0;
 	while (1)
 	{
 		// Add your code here.
-		sum=0;
-		for(index=0;index<BUFF_SIZE;index++)
+
+		sum0 = 0;
+		for(i=0;i<BUFF_SIZE;i++)
 		{
 			while( !(GYROread_byte(STATUS_REG)&1) );
 
@@ -172,27 +164,22 @@ int main()
 			Gyro_Xout_u = (spi_rxh<<8) | spi_rxl;
 			Gyro_Xout = Gyro_Xout_u;
 
-			sum += Gyro_Xout;
+			sum0 += (Gyro_Xout /*- GYRO_NULL*/);
 		}
-		sum/=BUFF_SIZE;
-		BIAS_sum += sum;
-		sum-=BIAS;
-		BIAS
+		avg0 = sum0/BUFF_SIZE;
+
+		//Gyro_integral += ((avg0*BUFF_SIZE)/SCALING_FOR_INTEGRATION);
+		Gyro_integral += ((sum0)/SCALING_FOR_INTEGRATION);
 
 
-
-		Gyro_integral += ((sum*BUFF_SIZE)/SCALING_FOR_INTEGRATION) ;
-
-
-
-		BIAS_calc__counts++;
+	/*	BIAS_calc__counts++;
 		if(BIAS_calc__counts>=BIAS_CALC_COUNTS)
 		{
 			BIAS_calc__counts = 1;
 			BIAS = BIAS_sum/BIAS_CALC_COUNTS;
 			BIAS_sum = 0;
 		}
-
+*/
 		//for(time=0;time<=100000;time++);
 
 
@@ -201,14 +188,15 @@ int main()
 		sendLInt(count++);
 
 		sendChar(' ');
-		sendLInt(sum);
+		//sendLInt(sample_sum);
+		sendLInt(avg0);
 		sendChar(' ');
 
 
 		sendLInt(Gyro_integral);
-		sendChar(' ');
-		sendLInt(BIAS);
-		sendString("\n");
+		//sendChar(' ');
+		//sendLInt(BIAS);
+		sendString("\n\r");
 
 		GPIOE->ODR ^= GPIO_ODR_9;
 	}
