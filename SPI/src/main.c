@@ -9,9 +9,10 @@
 #include "stm32f30x_spi.h"
 #include "myGYRO.h"
 
-#define BUFF_SIZE 100
-#define SCALING_FOR_INTEGRATION 1000
+#define BUFF0_SIZE 100
+#define SCALING_FOR_INTEGRATION 7000
 
+#define BUFF1_SIZE 10
 
 void sendChar(char c)
 {
@@ -146,16 +147,29 @@ int main()
 	//int buffer[BUFF_SIZE];
 	int index;
 	int i;
-	int sum0=0, avg0;
+	int sum0=0, avg0, index0=0;
+	int16_t buff0[BUFF0_SIZE];
+
+	int sum1=0, avg1=0, index1=0;
+	int16_t buff1[BUFF1_SIZE];
 	int GYRO_NULL = 213;
 	int count = 0;
+	for(i=0;i<BUFF0_SIZE;i++)
+	{
+		buff0[i] = 0;                 //initialise buff0 to 0
+	}
+	for(i=0;i<BUFF1_SIZE;i++)
+	{
+		buff1[i] = 0;                 //initialise buff0 to 0
+	}
 	while (1)
 	{
 		// Add your code here.
 
-		sum0 = 0;
-		for(i=0;i<BUFF_SIZE;i++)
-		{
+		//sum0 = 0;
+		//for(i=0;i<BUFF0_SIZE;i++)
+		//{
+
 			while( !(GYROread_byte(STATUS_REG)&1) );
 
 			spi_rxh = GYROread_byte(OUT_X_H);
@@ -164,13 +178,36 @@ int main()
 			Gyro_Xout_u = (spi_rxh<<8) | spi_rxl;
 			Gyro_Xout = Gyro_Xout_u;
 
-			sum0 += (Gyro_Xout /*- GYRO_NULL*/);
-		}
-		avg0 = sum0/BUFF_SIZE;
+			//sum0 += (Gyro_Xout /*- GYRO_NULL*/);
+			buff0[index0] = Gyro_Xout;       //load new value in buffer
+			sum0 += (Gyro_Xout-avg1);
+
+			index0++;
+			if(index0 >= BUFF0_SIZE)
+			{
+				index0 = 0;
+			}
+			sum0 -= buff0[index0];            //remove the oldest value from sum
+
+		//}
+
+
+			avg0 = sum0/BUFF0_SIZE;
 
 		//Gyro_integral += ((avg0*BUFF_SIZE)/SCALING_FOR_INTEGRATION);
-		Gyro_integral += ((sum0)/SCALING_FOR_INTEGRATION);
+		Gyro_integral += ((sum0/*-(BUFF0_SIZE*avg1)*/)/SCALING_FOR_INTEGRATION);
 
+		buff1[index1] = avg0;
+		sum1 += avg0;
+
+		index1++;
+		if(index1 >= BUFF1_SIZE)
+		{
+			index1 = 0;
+		}
+		sum1 -= buff1[index1];
+
+		avg1 = sum1/BUFF1_SIZE;          //avg1 is not the dynamically calculated GYRO NULL;
 
 	/*	BIAS_calc__counts++;
 		if(BIAS_calc__counts>=BIAS_CALC_COUNTS)
@@ -194,8 +231,8 @@ int main()
 
 
 		sendLInt(Gyro_integral);
-		//sendChar(' ');
-		//sendLInt(BIAS);
+		sendChar(' ');
+		sendLInt(avg1);
 		sendString("\n\r");
 
 		GPIOE->ODR ^= GPIO_ODR_9;
